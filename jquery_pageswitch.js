@@ -65,7 +65,67 @@
             },
             _initEvent:function(){
                 //init event
+                var me = this;
+                me.element.on("click",me.selectors.pages+"li",function(){
+                    me.index = $(this).index();
+                    me._scrollPage();
+                });
+                me.element.on("mousewheel DOMMouseScroll",function(e){
+                    var delta = e.originalEvent.wheelDelta || -e.originalEvent.detail;
+                    if(delta>0 &&(me.index && !me.settings.loop || me.settings.loop)){
+                        me.prev();
+                    }
+                    else if(delta<0 && (me.index<(me.pageCount-1) && !me.settings.loop || me.settings.loop)){
+                        me.next();
+                    }
+                });
+                if(me.settings.keyboard){
+                    $(window).on("keydown",function(e){
+                        var keyCode = e.keyCode;
+                        // left:37 ,up:38,right:39,down:40
+                        if(keyCode == 37 || keyCode==38){
+                            me.prev();
+                        }else if(keyCode ==39 ||keyCode==40){
+                            me.next();
+                        }
+
+                    })
+                };
+                $(window).resize(function(){
+                    var currentLength = me.switchLength();
+                    var offset = me.settings.direction?me.section.eq(me.index).offset().top : me.section.eq(me.index).offset().left;
+
+                    if(Math.abs(offset)>currentLength/2 && me.index<(me.pageCount-1)){
+                        me.index++;
+                    }
+                    if(me.index){
+                        me._scrollPage();
+                    }
+                });
+                me.sections.on("transitionend",function(){
+                    if(me.settings.callback && $.type(me.settings.callback)==='function'){
+                        me.settings.calback();
+                    }
+                })
             },
+            prev:function(){
+                var me = this;
+                if(me.index>0){
+                    me.index --;
+                }else if(me.settings.loop){
+                    me.index = me.pageCount - 1;
+                }
+                me._scrollPage();
+            },
+            next:function(){
+                var me = this;
+                if(me.index<me.pagesCount){
+                    me.index++;
+                }else if(me.settings.loop){
+                    me.index = 0;
+                }
+                me._scrollPage();
+            }
         }
         return PageSwitch;
     })();
