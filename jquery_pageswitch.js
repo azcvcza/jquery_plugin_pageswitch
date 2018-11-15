@@ -39,8 +39,8 @@
                 var me = this;
                 var width = (me.pagesCount*100)+"%";
                 var cellWidth = (100/me.pagesCount).toFixed(2)+"%";
-                me.sections.width(width);
-                me.section.width(cellWidth).css("float","left");
+                $(me.sections).width(width);
+                $(me.section).width(cellWidth).css("float","left");
             },
             _initPageing:function(){
                 //make structure of element & css
@@ -102,7 +102,7 @@
                         me._scrollPage();
                     }
                 });
-                me.sections.on("transitionend",function(){
+                $(me.sections).on("transitionend",function(){
                     if(me.settings.callback && $.type(me.settings.callback)==='function'){
                         me.settings.calback();
                     }

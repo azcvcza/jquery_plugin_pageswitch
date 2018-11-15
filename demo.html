@@ -13,7 +13,7 @@
     }
     html,body{
         height: 100%;
-        overflow-y: hidden;/*隐藏x滚动条*/
+        /*overflow-y: hidden;/*隐藏x滚动条*/
     }
     #container,.sections,.section{
         height:100%;
@@ -64,6 +64,11 @@
 <script src="jquery-3.1.0.js"></script>
 <script src="jquery_pageswitch.js"></script>
 <script>
-    $('#container').PageSwitch();
+    $('#container').PageSwitch(
+        {
+            direction:"herizontal"
+        }
+    );
+    //$("#container").PageSwitch("init");
 </script>
 </html>
