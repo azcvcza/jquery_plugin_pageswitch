@@ -13,8 +13,8 @@
                 //init dom
                 var me = this;
                 me.selectors = me.settings.selectors;
-                me.sections = me.selectors.sections;
-                me.section = me.selectors.section;
+                me.sections = me.element.find(me.element.selectors.sections);
+                me.section = me.sections.find(me.selectors.section);
                 
                 me.direction = me.settings.direction=="vertical"?true:false;
                 me.index = (me.settings.index>=0 && me.settings.index< this.pagesCount)?me.settings.index:0;
